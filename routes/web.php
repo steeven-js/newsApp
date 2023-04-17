@@ -39,10 +39,23 @@ Route::middleware('auth')->group(function () {
 
 /**Route sécurisée pour la gestion des news */
 Route::middleware('auth')->group(function () {
+    // Lister mes news
+    Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('news');
+
+    // Ajouter des news
     Route::get('/admin/news/add', [AdminNewsController::class, 'formAdd'])->name('news.add');
     Route::post('/admin/news/add', [AdminNewsController::class, 'add'])->name('news.add');
 
+    // modifier des news
+    Route::get('/admin/news/edit/{id}', [AdminNewsController::class, 'formEdit'])->name('news.edit');
+    Route::post('/admin/news/edit/{id}', [AdminNewsController::class, 'edit'])->name('news.edit');
+
+    // Voir une news
+    Route::get('/admin/news/{id}', [AdminNewsController::class, 'show'])->name('onenews');
+
+    // Supprimer une news
+    Route::get('/admin/news/delete/{id}', [AdminNewsController::class, 'delete'])->name('news.delete');
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

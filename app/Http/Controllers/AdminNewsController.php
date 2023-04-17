@@ -4,17 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class AdminNewsController extends Controller
 {
-    // Affichage de mon formulaire
+    /**
+     * Listing
+     */
+    public function index(Request $request)
+    {
+        $news = News::orderBy('updated_at', 'DESC')->paginate(5);
+
+        return view('news', compact('news'));
+    }
+
+    /**
+     * Ajout
+     */
+    // Afficher le formulaire
     public function formAdd()
     {
 
-        return view('adminnews.add');
+        return view('adminnews.edit');
     }
 
-    // Ajout des informations
+    // Créer la news
     public function add(Request $request)
     {
 
@@ -26,14 +41,73 @@ class AdminNewsController extends Controller
         // création d'une instance de class (model News) pour enregistrer en base .
         $newsModel = new News;
 
-        $newsModel->titre = $request->titre;
         // Traitement de l'upload de 'image
         if ($request->file()) {
-            $fileName = $request->image->store('images');
+            $fileName = $request->image->store('public/images');
             $newsModel->image = $fileName;
         }
 
+        $newsModel->description = $request->description;
+
+        $newsModel->titre = $request->titre;
+
+        // dd($newsModel);
         // Enregistrement des données
         $newsModel->save();
+
+        return Redirect::route('news.add');
+    }
+
+    public function show($id)
+    {
+        $onenews = News::find($id);
+
+        // dd($oneNews);
+
+        return view('onenews', compact('onenews'));
+    }
+
+    /**
+     * Edition
+     */
+    // Afficher le formulaire de modification
+    public function formEdit($id)
+    {
+        $actu = News::findOrFail($id);
+
+        return view('adminnews.edit', compact('actu'));
+    }
+    // Enregistrer le modification
+    public function edit(Request $request, $id)
+    {
+        $actu = News::findOrFails($id);
+
+        $request->validate(['titre' => 'required|min:5']);
+
+        $actu->description = $request->description;
+
+        $actu->titre = $request->titre;
+        
+        $actu->save();
+        return Redirect::route('news.list');
+    }
+
+    /**
+     * Supression
+     */
+
+    public function delete($id = 0)
+    {
+
+        $news = News::findOrFail($id);
+
+        if ($news->image != '') { //Vérifie si l'image existe en db
+
+            Storage::delete($news->image);
+        }
+
+        $news->delete();
+
+        return redirect(route('news'));
     }
 }
