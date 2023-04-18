@@ -14,9 +14,9 @@ class AdminNewsController extends Controller
      */
     public function index(Request $request)
     {
-        $news = News::orderBy('updated_at', 'DESC')->paginate(5);
+        $news = News::orderBy('updated_at', 'DESC')->paginate(10);
 
-        return view('news', compact('news'));
+        return view('adminList', compact('news'));
     }
 
     /**
@@ -64,7 +64,7 @@ class AdminNewsController extends Controller
 
         // dd($oneNews);
 
-        return view('onenews', compact('onenews'));
+        return view('adminShow', compact('onenews'));
     }
 
     /**
@@ -80,16 +80,27 @@ class AdminNewsController extends Controller
     // Enregistrer le modification
     public function edit(Request $request, $id)
     {
-        $actu = News::findOrFails($id);
+        $actu = News::findOrFail($id);
 
         $request->validate(['titre' => 'required|min:5']);
 
         $actu->description = $request->description;
 
         $actu->titre = $request->titre;
+
+        // Traitement de l'upload de 'image
+        if ($request->file()) {
+
+            if ($actu->image != '') {
+                Storage::delete($actu->image);
+            }
+
+            $fileName = $request->image->store('public/images');
+            $actu->image = $fileName;
+        }
         
         $actu->save();
-        return Redirect::route('news.list');
+        return Redirect::route('adminList');
     }
 
     /**
@@ -108,6 +119,6 @@ class AdminNewsController extends Controller
 
         $news->delete();
 
-        return redirect(route('news'));
+        return redirect(route('adminList'));
     }
 }

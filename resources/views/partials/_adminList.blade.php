@@ -14,13 +14,13 @@
                     <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
                         <div class="relative h-20 w-20">
                             <img class="h-full w-full object-cover object-center"
-                                src="{{ asset('storage/' . $itemnews->image) }}" alt="" />
+                                src="{{ Storage::url($itemnews->image) }}" alt="" />
                             <span
                                 class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
                         </div>
                     </th>
                     <td class="px-6 py-4">
-                        <a href="{{ route('onenews', $itemnews->id) }}">
+                        <a href="{{ route('adminShow', $itemnews->id) }}">
                             <p class="leading-none">{{ $itemnews->updated_at }}</p>
                             <p>{{ $itemnews->titre }}</p>
                         </a>

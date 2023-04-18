@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminNewsController;
 
@@ -15,9 +16,15 @@ use App\Http\Controllers\AdminNewsController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
+
     return view('welcome');
 });
+
+Route::get('/', [NewsController::class, 'index'])->name('home');
+
+// Voir une news
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('show');
 
 Route::get('/secure', function () {
     return view('secure');
@@ -40,7 +47,7 @@ Route::middleware('auth')->group(function () {
 /**Route sécurisée pour la gestion des news */
 Route::middleware('auth')->group(function () {
     // Lister mes news
-    Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('news');
+    Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('adminList');
 
     // Ajouter des news
     Route::get('/admin/news/add', [AdminNewsController::class, 'formAdd'])->name('news.add');
@@ -51,7 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/news/edit/{id}', [AdminNewsController::class, 'edit'])->name('news.edit');
 
     // Voir une news
-    Route::get('/admin/news/{id}', [AdminNewsController::class, 'show'])->name('onenews');
+    Route::get('/admin/news/{id}', [AdminNewsController::class, 'show'])->name('adminShow');
 
     // Supprimer une news
     Route::get('/admin/news/delete/{id}', [AdminNewsController::class, 'delete'])->name('news.delete');
