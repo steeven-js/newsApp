@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -26,7 +27,11 @@ class AdminNewsController extends Controller
     public function formAdd()
     {
 
-        return view('adminnews.edit');
+        $categories = Category::orderBy('name', 'asc')->get();
+
+        return view('adminnews.edit', compact(
+            'categories'
+        ));
     }
 
     // Créer la news
@@ -48,6 +53,8 @@ class AdminNewsController extends Controller
         }
 
         $newsModel->description = $request->description;
+
+        $newsModel->category_id = $request->category;
 
         $newsModel->titre = $request->titre;
 
@@ -75,7 +82,14 @@ class AdminNewsController extends Controller
     {
         $actu = News::findOrFail($id);
 
-        return view('adminnews.edit', compact('actu'));
+        $categories = Category::orderBy('name', 'asc')->get();
+
+        // dd($categories);
+
+        return view('adminnews.edit', compact(
+            'actu',
+            'categories'
+        ));
     }
     // Enregistrer le modification
     public function edit(Request $request, $id)
@@ -85,6 +99,8 @@ class AdminNewsController extends Controller
         $request->validate(['titre' => 'required|min:5']);
 
         $actu->description = $request->description;
+
+        $actu->category_id = $request->category;
 
         $actu->titre = $request->titre;
 

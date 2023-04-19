@@ -831,8 +831,8 @@
     {{-- @dd($news); --}}
     <x-app-layout>
         <div
-        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-        <div class="py-12 md:px-20 sm:px-14 px-6">
+            class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+            <div class="py-12 md:px-20 sm:px-14 px-6">
                 {{ $news->links() }}
                 <div class="container mx-auto grid gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                     @forelse ($news as $itennews)
@@ -843,6 +843,17 @@
                                         src="{{ Storage::url($itennews->image) }}" alt="" />
                                 </div>
                             @endisset
+                            <div
+                                class="mt-3 text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-1 bg-blue-200 text-blue-700 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-arrow-right mr-2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                                {{ $itennews->category->name }}
+                            </div>
                             <div>
                                 <h1 class="mt-3 text-gray-800 text-2xl font-bold my-2">
                                     {{ Str::limit($itennews->description, 50) }}</h1>
@@ -863,7 +874,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                     @empty
                         <p>Aucune news</p>
                     @endforelse

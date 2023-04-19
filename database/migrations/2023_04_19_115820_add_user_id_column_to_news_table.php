@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('news', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            //
+            $table->unsignedBigInteger('user_id')->default(1);
+            
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -22,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('news', function (Blueprint $table) {
+            //
+        });
     }
 };
