@@ -831,8 +831,9 @@
     {{-- @dd($news); --}}
     <x-app-layout>
         <div
-            class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            <div class="py-12 md:px-20 sm:px-14 px-6">
+        class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+        <div class="py-12 md:px-20 sm:px-14 px-6">
+                {{ $news->links() }}
                 <div class="container mx-auto grid gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                     @forelse ($news as $itennews)
                         <div class="m-3">
@@ -862,6 +863,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     @empty
                         <p>Aucune news</p>
                     @endforelse

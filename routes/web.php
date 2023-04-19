@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminNewsController;
+use App\Http\Controllers\NewsStandardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::get('/', [NewsController::class, 'index'])->name('home');
 
 // Voir une news
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('show');
+
+Route::get('/news/Standard', [NewsStandardController::class, 'index'])->name('news.standard');
+Route::get('/news/StandardDetail/{actu}', [NewsStandardController::class, 'detail'])->name('news.standardDetail');
 
 Route::get('/secure', function () {
     return view('secure');
