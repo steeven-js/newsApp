@@ -27,8 +27,11 @@ Route::get('/', [NewsController::class, 'index'])->name('home');
 // Voir une news
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('show');
 
-Route::get('/news/Standard', [NewsStandardController::class, 'index'])->name('news.standard');
-Route::get('/news/StandardDetail/{actu}', [NewsStandardController::class, 'detail'])->name('news.standardDetail');
+/**************************** affichage des news pour le client ********************************/
+Route::get('/standard', [NewsStandardController::class, 'standard'])->name('news.standard');
+Route::get('/standardDetail/{actu}', [NewsStandardController::class, 'detail'])->name('news.standardDetail');
+Route::get('/standardDetail/category/{id}', [NewsStandardController::class, 'detail'])->name('news.category');
+/**************************** /affichage des news pour le client ********************************/
 
 Route::get('/secure', function () {
     return view('secure');
