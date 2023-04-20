@@ -30,7 +30,7 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('show');
 /**************************** affichage des news pour le client ********************************/
 Route::get('/standard', [NewsStandardController::class, 'standard'])->name('news.standard');
 Route::get('/standardDetail/{actu}', [NewsStandardController::class, 'detail'])->name('news.standardDetail');
-Route::get('/standardDetail/category/{id}', [NewsStandardController::class, 'detail'])->name('news.category');
+Route::get('/standard/category/{id}', [NewsStandardController::class, 'standard'])->name('news.category');
 /**************************** /affichage des news pour le client ********************************/
 
 Route::get('/secure', function () {

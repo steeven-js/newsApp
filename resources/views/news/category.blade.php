@@ -3,8 +3,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center">
-                @forelse ($categories as $itemcategories)
-                    <a href="" class="mr-5">
+                @forelse ($categories as $itemcategories)   
+                    <a href="{{ route('news.category', $itemcategories->id) }}" class="mr-5">
                         {{ $itemcategories->name }}
                     </a>
                 @empty
