@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -21,6 +23,25 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Défini l'utilisateur en tant qu' administrateur à partir du boolén de la ta ble User
+        Gate::define('admin', function (User $user) {
+
+            return $user->admin === 1;
+
+        });
+
+        // Autorisation majeur
+        // Gate::define('majeur', function (User $user) {
+        //     $age = date('Y') - intval(substr($user->datenais, 4, 4));
+
+        //     return $age >= 18;
+        // });
+
+        // Autorisation abonnement
+        // Gate::define('abonnement', function (User $user) {
+
+        //     return date("Y-m-d H:i:s") <= $user->abonnement ;
+
+        // });
     }
 }
