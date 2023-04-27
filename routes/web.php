@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 });
 
 /**Route sécurisée pour la gestion des news */
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'can:admin')->group(function () {
     // Lister mes news
     Route::get('/admin/news', [AdminNewsController::class, 'index'])->name('adminList');
 

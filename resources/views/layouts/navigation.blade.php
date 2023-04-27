@@ -16,11 +16,14 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('adminList')" :active="request()->routeIs('adminList')">
-                        {{ __('News') }}
-                    </x-nav-link>
-                </div>
+                @if (Gate::allows('admin'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('adminList')" :active="request()->routeIs('adminList')">
+                            {{ __('News') }}
+                        </x-nav-link>
+                    </div>
+                @else
+                @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('news.standard')" :active="request()->routeIs('news.standard')">
                         {{ __('standard') }}
@@ -67,11 +70,11 @@
                     </x-dropdown>
                 </div>
             @else
-            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                    {{ __('Se connecter') }}
-                </x-nav-link>
-            </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                        {{ __('Se connecter') }}
+                    </x-nav-link>
+                </div>
             @endif
 
             <!-- Hamburger -->
